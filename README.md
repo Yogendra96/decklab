@@ -146,6 +146,12 @@ sudo systemctl enable disable-hci0.service && \
 sudo systemctl start disable-hci0.service
 ```
 
+### Uninstall
+
+```bash
+./uninstall.sh
+```
+
 ## Verification
 
 Check Bluetooth status:
@@ -198,6 +204,8 @@ sudo bash -c 'for f in /var/lib/systemd/rfkill/*; do echo 0 > "$f"; done'
 decklab/
 ├── README.md
 ├── .gitignore
+├── install.sh             # Automatic installer
+├── uninstall.sh           # Clean removal
 ├── scripts/
 │   └── disable-hci0      # Bluetooth toggle script
 ├── systemd/
