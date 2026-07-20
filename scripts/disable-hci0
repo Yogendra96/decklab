@@ -1,0 +1,20 @@
+#!/bin/bash
+# Disable built-in Qualcomm Bluetooth (hci0), enable TP-Link (hci1)
+#
+# Config: edit these MAC addresses to match your hardware
+HCI0_MAC="XX:XX:XX:XX:XX:XX"   # Built-in Qualcomm (to disable)
+HCI1_MAC="XX:XX:XX:XX:XX:XX"   # TP-Link USB adapter (to enable)
+
+for i in 1 2 3 4 5; do
+  bluetoothctl list 2>/dev/null | grep -q . && break
+  sleep 2
+done
+
+bluetoothctl << EOF
+select $HCI0_MAC
+power off
+select $HCI1_MAC
+power on
+discoverable on
+quit
+EOF

@@ -1,0 +1,19 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Secrets
+*.token
+*.key
+.env
+
+# Build artifacts
+*.tar.gz
+*.zip

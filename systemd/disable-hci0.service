@@ -1,0 +1,12 @@
+[Unit]
+Description=Disable built-in Qualcomm Bluetooth (hci0)
+After=bluetooth.service
+Requires=bluetooth.service
+
+[Service]
+Type=oneshot
+ExecStart=/home/deck/.local/bin/disable-hci0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
