@@ -3,35 +3,15 @@ set -e
 
 echo "=== decklab Uninstaller ==="
 
-# Stop and disable systemd service
-echo "Stopping and disabling service..."
-sudo systemctl stop disable-hci0.service 2>/dev/null || true
-sudo systemctl disable disable-hci0.service 2>/dev/null || true
+# Remove modprobe blacklist
+echo "Removing kernel module blacklist..."
+sudo rm -f /etc/modprobe.d/disable-qualcomm-bt.conf
 
-# Remove systemd service
-echo "Removing systemd service..."
-sudo rm -f /etc/systemd/system/disable-hci0.service
-
-# Remove script
-echo "Removing script..."
-rm -f /home/deck/.local/bin/disable-hci0
-
-# Reload systemd
-sudo systemctl daemon-reload
-
-# Re-enable built-in Bluetooth (hci0)
-echo "Re-enabling built-in Bluetooth..."
-bluetoothctl << EOF
-power on
-quit
-EOF
+# Load the module back
+echo "Reloading UART Bluetooth driver..."
+sudo modprobe hci_uart 2>/dev/null || echo "(will load on next boot automatically)"
 
 echo ""
 echo "=== Done ==="
-echo "decklab has been removed."
-echo ""
-echo "To re-enable SteamOS read-only:"
-echo "  sudo steamos-readonly enable"
-echo ""
-echo "Reboot recommended:"
-echo "  sudo systemctl reboot"
+echo "Built-in Bluetooth will reappear after reboot."
+echo "You can also run: sudo modprobe hci_uart"
