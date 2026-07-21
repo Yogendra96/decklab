@@ -65,7 +65,7 @@ Disables the built-in Qualcomm BT and enables the TP-Link at every boot:
     └── /home/deck/.local/bin/disable-hci0
 ```
 
-The script:
+The script (bluetoothctl only — rfkill is avoided as it corrupts bluetoothd's adapter state):
 1. Waits for bluetoothd to be ready
 2. Selects hci0 (Qualcomm) by MAC → powers it off
 3. Selects hci1 (TP-Link) by MAC → powers it on, makes discoverable
@@ -183,9 +183,9 @@ Settings → Battery → Charge Limit → ON
 
 This halts charging at 80% when the Deck is plugged in 24/7, halving long-term battery wear. SteamOS handles pass-through charging — at 100%, the Deck runs directly from the power supply, not the battery.
 
-### rfkill Cleanup (if BT adapters are blocked)
+### rfkill Cleanup (if you manually blocked adapters)
 
-If Bluetooth appears blocked after installation:
+The script uses bluetoothctl (not rfkill). Only needed if you previously used rfkill manually:
 
 ```bash
 # Check rfkill state
