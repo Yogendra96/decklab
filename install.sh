@@ -9,8 +9,9 @@ echo "Installing kernel module blacklist..."
 sudo cp config/disable-qualcomm-bt.conf /etc/modprobe.d/
 echo ""
 
-# Clean BT rfkill persistent state
-echo "Cleaning persistent rfkill state..."
+# Clean BT rfkill live and persistent state
+echo "Cleaning Bluetooth rfkill state..."
+sudo rfkill unblock bluetooth
 for f in /var/lib/systemd/rfkill/*bluetooth*; do
   echo 1 | sudo tee "$f" > /dev/null
 done

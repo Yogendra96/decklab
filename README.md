@@ -22,6 +22,17 @@ The built-in BT uses `hci_uart.ko`. USB adapters use `btusb.ko` (separate driver
 
 **No scripts, no services, no MAC addresses, no boot ordering.**
 
+## If Bluetooth Shows "Powered: no"
+
+If after boot the adapter shows `PowerState: off-blocked`, old rfkill state was restored:
+
+```bash
+sudo rfkill unblock bluetooth
+sudo systemctl restart bluetooth
+```
+
+Run once — the fix persists after that. The install script does this automatically.
+
 ## Reversible
 
 ```bash
